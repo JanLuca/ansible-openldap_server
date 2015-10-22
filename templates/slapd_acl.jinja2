@@ -1,0 +1,4 @@
+{%for acl in slapd_acls%}
+- '{%raw%}{{%endraw%}{{loop.index0|string}}{%raw%}}{%endraw%}to {{acl.to}}{%for priv in acl.privs%} by {{priv.who}} {{priv.what}}{%endfor%}'
+{%endfor%}
+

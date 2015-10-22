@@ -1,0 +1,20 @@
+---
+
+# Some of this is copied from https://github.com/debops/ansible-slapd
+
+slapd_domain: "{{ansible_fqdn}}"
+slapd_base: '{{ "dc=" + slapd_domain.split(".") | join(",dc=") }}'
+slapd_backend: 'mdb'
+slapd_acls:
+- to: '*'
+  privs:
+  - who: 'dn.exact=gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth'
+    what: 'manage'
+  - {who: '*', what: 'break'}
+- to: 'dn.exact=""'
+  privs:
+  - {who: '*', what: 'read'}
+- to: 'dn.base="cn=Subschema"'
+  privs:
+  - who: '*'
+    what: 'read'
