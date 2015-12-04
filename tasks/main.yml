@@ -1,6 +1,6 @@
 ---
 
-- name: Configure domain for OpenLDAP in debconf
+- name: Configure domain for OpenLDAP in debconf: Strings
   debconf: name='slapd'
            question='{{ item.key }}'
            vtype='string'
@@ -9,6 +9,25 @@
     slapd/domain: '{{slapd_domain}}'
     shared/organization: '{{slapd_domain}}'
     slapd/backend: '{{slapd_backend|upper}}'
+
+- name: Configure domain for OpenLDAP in debconf: Booleans
+  debconf: name='slapd'
+           question='{{ item.key }}'
+           vtype='boolean'
+           value='{{ item.value }}'
+  with_dict:
+    slapd/no_configuration: 'false'
+    slapd/move_old_database: 'true'
+    slapd/allow_ldap_v2: 'false'
+
+- name: Configure domain for OpenLDAP in debconf: Passwords
+  debconf: name='slapd'
+           question='{{ item.key }}'
+           vtype='password'
+           value='{{ item.value }}'
+  with_dict:
+    slapd/password1: '{{slapd_password}}'
+    slapd/password2: '{{slapd_password}}'
 
 - name: Install OpenLDAP packages
   apt: name={{ item }}
