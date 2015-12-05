@@ -1,0 +1,4 @@
+---
+
+- src: https://github.com/fabianfreyer/ansible-openldap_server.git
+  name: openldap_server
