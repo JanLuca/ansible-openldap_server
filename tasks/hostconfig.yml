@@ -1,0 +1,13 @@
+---
+
+- name: Set host LDAP base
+  lineinfile:
+    dest: /etc/ldap/ldap.conf
+    regexp: '#?BASE'
+    line: 'BASE   {{slapd_base}}'
+
+- name: Set host LDAP URI
+  lineinfile:
+    dest: /etc/ldap/ldap.conf
+    regexp: '#?URI'
+    line: 'URI    ldap://{{slapd_domain}}/'

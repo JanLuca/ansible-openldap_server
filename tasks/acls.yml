@@ -1,0 +1,9 @@
+---
+
+- name: Configure LDAP ACLs
+  ldap_attr:
+    dn: 'olcDatabase={1}{{ slapd_backend }},cn=config'
+    name: 'olcAccess'
+    values: '{{lookup("template", "slapd_acl.jinja2")|from_yaml}}'
+    state: 'exact'
+  tags: debug

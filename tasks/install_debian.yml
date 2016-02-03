@@ -1,0 +1,20 @@
+---
+
+- name: Configure domain for OpenLDAP in debconf
+  debconf:
+    name: 'slapd'
+    question: '{{ item.key }}'
+    vtype: 'string'
+    value: '{{ item.value }}'
+  with_dict:
+    slapd/domain: '{{slapd_domain}}'
+    shared/organization: '{{slapd_domain}}'
+    slapd/backend: '{{slapd_backend|upper}}'
+
+- name: Install OpenLDAP packages
+  apt: name={{ item }}
+  with_items:
+  - slapd
+  - ldap-utils
+  - python-ldap
+  - ldapvi
