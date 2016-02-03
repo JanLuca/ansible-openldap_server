@@ -1,10 +1,11 @@
 ---
 
 - name: Configure domain for OpenLDAP in debconf
-  debconf: name='slapd'
-           question='{{ item.key }}'
-           vtype='string'
-           value='{{ item.value }}'
+  debconf:
+    name: 'slapd'
+    question: '{{ item.key }}'
+    vtype: 'string'
+    value: '{{ item.value }}'
   with_dict:
     slapd/domain: '{{slapd_domain}}'
     shared/organization: '{{slapd_domain}}'
@@ -18,21 +19,23 @@
   - python-ldap
   - ldapvi
 
-- name: host LDAP base
-  lineinfile: dest=/etc/ldap/ldap.conf
-              regexp='#?BASE'
-              line='BASE   {{slapd_base}}'
+- name: Set host LDAP base
+  lineinfile:
+    dest: /etc/ldap/ldap.conf
+    regexp: '#?BASE'
+    line: 'BASE   {{slapd_base}}'
 
-- name: host LDAP uri
-  lineinfile: dest=/etc/ldap/ldap.conf
-              regexp='#?URI'
-              line='URI    ldap://{{slapd_domain}}/'
+- name: Set host LDAP URI
+  lineinfile:
+    dest: /etc/ldap/ldap.conf
+    regexp: '#?URI'
+    line: 'URI    ldap://{{slapd_domain}}/'
 
 - name: Configure LDAP ACLs
   ldap_attr:
-        dn: 'olcDatabase={1}{{ slapd_backend }},cn=config'
-        name: 'olcAccess'
-        values: '{{lookup("template", "slapd_acl.jinja2")|from_yaml}}'
-        state: 'exact'
+    dn: 'olcDatabase={1}{{ slapd_backend }},cn=config'
+    name: 'olcAccess'
+    values: '{{lookup("template", "slapd_acl.jinja2")|from_yaml}}'
+    state: 'exact'
   tags: debug
 
