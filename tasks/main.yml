@@ -1,6 +1,6 @@
 ---
 
 - include: install_debian.yml
-  when: ansible_os_family == "Debian" || ansible_os_family == "Ubuntu"
+  when: ansible_os_family == "Debian" or ansible_os_family == "Ubuntu"
 - include: hostconfig.yml
 - include: acls.yml
