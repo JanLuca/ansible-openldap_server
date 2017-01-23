@@ -1,19 +1,14 @@
 ---
+sudo: required
+dist: trusty
+
 language: "python"
 python:
 - 2.7
 
 env:
-- ANSIBLE_VERSION=1.8
-- ANSIBLE_VERSION=1.8.1
-- ANSIBLE_VERSION=1.8.2
-- ANSIBLE_VERSION=1.8.3
-- ANSIBLE_VERSION=1.8.4
-- ANSIBLE_VERSION=1.9.0.1
-- ANSIBLE_VERSION=1.9.1
-- ANSIBLE_VERSION=1.9.2
-- ANSIBLE_VERSION=1.9.3
-- ANSIBLE_VERSION=1.9.4
+- ANSIBLE_VERSION=2.1
+- ANSIBLE_VERSION=2.2
 
 before_install:
 # Make sure everything's up to date.
@@ -21,7 +16,7 @@ before_install:
 
 install:
 - pip install ansible==$ANSIBLE_VERSION
-- "{ echo '[defaults]'; echo 'roles_path = ./'; } >> ansible.cfg"
+- "{ echo '[defaults]'; echo 'roles_path = ../'; } >> ansible.cfg"
 - ansible-galaxy install -r tests/requirements.yml
 
 script:
