@@ -4,14 +4,18 @@
   debconf:
     name: 'slapd'
     question: '{{ item.key }}'
-    vtype: 'string'
-    value: '{{ item.value }}'
+    vtype: '{{ item.value.type }}'
+    value: '{{ item.value.value }}'
   with_dict:
-    slapd/domain: '{{slapd_domain}}'
-    shared/organization: '{{slapd_domain}}'
-    slapd/backend: '{{slapd_backend|upper}}'
-  notify:
-  - restart slapd
+    slapd/domain:            { type: string,   value: '{{slapd_domain}}' }
+    shared/organization:     { type: string,   value: '{{slapd_domain}}' }
+    slapd/backend:           { type: string,   value: '{{slapd_backend|upper}}' }
+    slapd/no_configuration:  { type: boolean,  value:  'false' }
+    slapd/move_old_database: { type: boolean,  value:  'true' }
+    slapd/allow_ldap_v2:     { type: boolean,  value:  'false' }
+    slapd/password1:         { type: password, value: '{{slapd_password}}' }
+    slapd/password2:         { type: password,  value: '{{slapd_password}}' }
+  notify: restart slapd
 
 - name: Install OpenLDAP packages
   apt: name={{ item }}
