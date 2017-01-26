@@ -13,8 +13,8 @@
     slapd/no_configuration:  { type: boolean,  value:  'false' }
     slapd/move_old_database: { type: boolean,  value:  'true' }
     slapd/allow_ldap_v2:     { type: boolean,  value:  'false' }
-    slapd/password1:         { type: password, value: '{{slapd_password}}' }
-    slapd/password2:         { type: password,  value: '{{slapd_password}}' }
+    slapd/password1:         { type: password, value: '{{slapd_root_password}}' }
+    slapd/password2:         { type: password, value: '{{slapd_root_password}}' }
   notify: restart slapd
 
 - name: Install OpenLDAP packages

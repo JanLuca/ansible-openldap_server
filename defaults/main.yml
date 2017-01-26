@@ -5,7 +5,7 @@
 slapd_domain: "{{ansible_fqdn}}"
 slapd_base: '{{ "dc=" + slapd_domain.split(".") | join(",dc=") }}'
 slapd_backend: 'mdb'
-slapd_password: 'secretPassword'
+slapd_root_password: 'secretPassword'
 slapd_acls:
 - to: '*'
   privs:
