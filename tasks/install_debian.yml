@@ -10,6 +10,8 @@
     slapd/domain: '{{slapd_domain}}'
     shared/organization: '{{slapd_domain}}'
     slapd/backend: '{{slapd_backend|upper}}'
+  notify:
+  - restart slapd
 
 - name: Install OpenLDAP packages
   apt: name={{ item }}
