@@ -6,6 +6,15 @@ slapd_domain: "{{ansible_fqdn}}"
 slapd_base: '{{ "dc=" + slapd_domain.split(".") | join(",dc=") }}'
 slapd_backend: 'mdb'
 slapd_root_password: 'secretPassword'
+slapd_enable_protocol_ldap: True
+slapd_enable_protocol_ldaps: False
+slapd_enable_protocol_ldapi: True
+slapd_protocol_ldap_binds:
+- 'localhost:389'
+slapd_protocol_ldaps_binds:
+- 'localhost:636'
+slapd_protocol_ldapi_binds:
+- ''
 slapd_acls:
 - to: '*'
   privs:

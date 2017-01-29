@@ -5,3 +5,4 @@
 - include: hostconfig.yml
 - include: acls.yml
 - include: passwords.yml
+- include: serverconfig.yml

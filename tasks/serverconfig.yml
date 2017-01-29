@@ -1,0 +1,9 @@
+---
+
+- name: Set server bind settings
+  lineinfile:
+    dest: /etc/default/slapd
+    regexp: '^SLAPD_SERVICES'
+    line: 'SLAPD_SERVICES="{% if slapd_enable_protocol_ldap %}{% for bind in slapd_protocol_ldap_binds %}ldap://{{ bind }}/ {% endfor %}{% endif %}{% if slapd_enable_protocol_ldaps %}{% for bind in slapd_protocol_ldaps_binds %}ldaps://{{ bind }}/ {% endfor %}{% endif %}{% if slapd_enable_protocol_ldapi %}{% for bind in slapd_protocol_ldapi_binds %}ldapi://{{ bind }}/ {% endfor %}{% endif %}"'
+  notify: restart slapd
+
